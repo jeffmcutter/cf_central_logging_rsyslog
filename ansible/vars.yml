@@ -11,8 +11,8 @@
   # Size of the logical volume.
   # The standard CloudForms log file system is 10G, so the centralized logging file system should be 10 times the number of CF appliances that will log to it assuming a standard 14 day retention.  For longer or shorter retention, adjust accordingly.
   #100%FREE fails on subsequent runs unless we have 2.2 with shrink=False
-  #lv_size: 100%FREE
-  lv_size: 30g
+  lv_size: 100%FREE
+  #lv_size: 30g
 
   # Days worth of logs to keep.  See comments regarding size of volume above.
   days_to_keep: 14

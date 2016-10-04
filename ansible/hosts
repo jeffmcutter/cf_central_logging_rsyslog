@@ -14,13 +14,7 @@ wrk_appliance_2
 wrk_appliance_3
 
 # If appliances are not in DNS, you can set them as:
-#[central]
 #vmdb_appliance ansible_host=192.168.1.101
-#
-#[remotes]
-#ui_appliance_1 ansible_host=192.168.1.102
-#ui_appliance_2 ansible_host=192.168.1.102
-#wrk_appliance_1 ansible_host=192.168.1.103
-#wrk_appliance_2 ansible_host=192.168.1.104
-#wrk_appliance_3 ansible_host=192.168.1.105
 
+# If no SSH keys are configured, you can include the user/password info:
+#vmdb_appliance ansible_user=root ansible_ssh_pass=smartvm

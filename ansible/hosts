@@ -1,4 +1,6 @@
 # The central group should have only the appliance which will host the centralized logs.
+# In larger environments you may want to select an appliance other than the vmdb_appliance.
+# A UI or reporting appliance which may not be as burdened with disk I/O as the VMDB may be more suitable.
 [central]
 vmdb_appliance
 

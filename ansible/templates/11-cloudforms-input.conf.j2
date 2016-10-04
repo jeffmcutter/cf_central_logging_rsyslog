@@ -1,0 +1,111 @@
+# Follow CloudForms log files.
+
+$Modload imfile
+
+$InputFileName /var/www/miq/vmdb/log/api.log
+$InputFileTag cf_api:
+$InputFileStateFile cf_api
+$InputFileSeverity notice
+$InputFileFacility {{ log_facility }}
+$InputRunFileMonitor
+
+$InputFileName /var/www/miq/vmdb/log/appliance_console.log
+$InputFileTag cf_appliance_console:
+$InputFileStateFile cf_appliance_console
+$InputFileSeverity notice
+$InputFileFacility {{ log_facility }}
+$InputRunFileMonitor
+
+$InputFileName /var/www/miq/vmdb/log/audit.log
+$InputFileTag cf_audit:
+$InputFileStateFile cf_audit
+$InputFileSeverity notice
+$InputFileFacility {{ log_facility }}
+$InputRunFileMonitor
+
+$InputFileName /var/www/miq/vmdb/log/automation.log
+$InputFileTag cf_automation:
+$InputFileStateFile cf_automation
+$InputFileSeverity notice
+$InputFileFacility {{ log_facility }}
+$InputRunFileMonitor
+
+$InputFileName /var/www/miq/vmdb/log/aws.log
+$InputFileTag cf_aws:
+$InputFileStateFile cf_aws
+$InputFileSeverity notice
+$InputFileFacility {{ log_facility }}
+$InputRunFileMonitor
+
+$InputFileName /var/www/miq/vmdb/log/evm.log
+$InputFileTag cf_evm:
+$InputFileStateFile cf_evm
+$InputFileSeverity notice
+$InputFileFacility {{ log_facility }}
+$InputRunFileMonitor
+
+$InputFileName /var/www/miq/vmdb/log/fog.log
+$InputFileTag cf_fog:
+$InputFileStateFile cf_fog
+$InputFileSeverity notice
+$InputFileFacility {{ log_facility }}
+$InputRunFileMonitor
+
+$InputFileName /var/www/miq/vmdb/log/kubernetes.log
+$InputFileTag cf_kubernetes:
+$InputFileStateFile cf_kubernetes
+$InputFileSeverity notice
+$InputFileFacility {{ log_facility }}
+$InputRunFileMonitor
+
+$InputFileName /var/www/miq/vmdb/log/middleware.log
+$InputFileTag cf_middleware:
+$InputFileStateFile cf_middleware
+$InputFileSeverity notice
+$InputFileFacility {{ log_facility }}
+$InputRunFileMonitor
+
+$InputFileName /var/www/miq/vmdb/log/policy.log
+$InputFileTag cf_policy:
+$InputFileStateFile cf_policy
+$InputFileSeverity notice
+$InputFileFacility {{ log_facility }}
+$InputRunFileMonitor
+
+$InputFileName /var/www/miq/vmdb/log/production.log
+$InputFileTag cf_production:
+$InputFileStateFile cf_production
+$InputFileSeverity notice
+$InputFileFacility {{ log_facility }}
+$InputRunFileMonitor
+
+$InputFileName /var/www/miq/vmdb/log/rhevm.log
+$InputFileTag cf_rhevm:
+$InputFileStateFile cf_rhevm
+$InputFileSeverity notice
+$InputFileFacility {{ log_facility }}
+$InputRunFileMonitor
+
+$InputFileName /var/www/miq/vmdb/log/scvmm.log
+$InputFileTag cf_scvmm:
+$InputFileStateFile cf_scvmm
+$InputFileSeverity notice
+$InputFileFacility {{ log_facility }}
+$InputRunFileMonitor
+
+$InputFileName /var/www/miq/vmdb/log/vim.log
+$InputFileTag cf_vim:
+$InputFileStateFile cf_vim
+$InputFileSeverity notice
+$InputFileFacility {{ log_facility }}
+$InputRunFileMonitor
+
+$InputFileName /var/www/miq/vmdb/log/websocket.log
+$InputFileTag cf_websocket:
+$InputFileStateFile cf_websocket
+$InputFileSeverity notice
+$InputFileFacility {{ log_facility }}
+$InputRunFileMonitor
+
+$InputFilePollInterval {{ input_file_poll_interval}}
+

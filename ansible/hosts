@@ -1,0 +1,13 @@
+# The central group should have only the appliance which will host the centralized logs.
+[central]
+vmdb_appliance
+
+# The remotes group should have the rest of the appliances which will log to the central.
+# Do not include the central host here.
+[remotes]
+ui_appliance_1
+ui_appliance_2
+wrk_appliance_1
+wrk_appliance_2
+wrk_appliance_3
+

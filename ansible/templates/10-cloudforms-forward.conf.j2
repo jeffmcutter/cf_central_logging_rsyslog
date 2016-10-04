@@ -1,0 +1,33 @@
+# Forward CloudForms logs to central server on tcp (@@) {{ tcp_port }}
+
+:syslogtag, isequal, "cf_api:" @@cf_loghost:{{ tcp_port }}
+& stop
+:syslogtag, isequal, "cf_appliance_console:" @@cf_loghost:{{ tcp_port }}
+& stop
+:syslogtag, isequal, "cf_audit:" @@cf_loghost:{{ tcp_port }}
+& stop
+:syslogtag, isequal, "cf_automation:" @@cf_loghost:{{ tcp_port }}
+& stop
+:syslogtag, isequal, "cf_aws:" @@cf_loghost:{{ tcp_port }}
+& stop
+:syslogtag, isequal, "cf_evm:" @@cf_loghost:{{ tcp_port }}
+& stop
+:syslogtag, isequal, "cf_fog:" @@cf_loghost:{{ tcp_port }}
+& stop
+:syslogtag, isequal, "cf_kubernetes:" @@cf_loghost:{{ tcp_port }}
+& stop
+:syslogtag, isequal, "cf_middleware:" @@cf_loghost:{{ tcp_port }}
+& stop
+:syslogtag, isequal, "cf_policy:" @@cf_loghost:{{ tcp_port }}
+& stop
+:syslogtag, isequal, "cf_production:" @@cf_loghost:{{ tcp_port }}
+& stop
+:syslogtag, isequal, "cf_rhevm:" @@cf_loghost:{{ tcp_port }}
+& stop
+:syslogtag, isequal, "cf_scvmm:" @@cf_loghost:{{ tcp_port }}
+& stop
+:syslogtag, isequal, "cf_vim:" @@cf_loghost:{{ tcp_port }}
+& stop
+:syslogtag, isequal, "cf_websocket:" @@cf_loghost:{{ tcp_port }}
+& stop
+

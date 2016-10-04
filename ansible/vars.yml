@@ -1,0 +1,36 @@
+---
+  # Specify the disk device to use for storing the central logs
+  log_disk: /dev/vdc
+
+  # Name for the volume group to contain the central logs
+  vg_name: vg_logs
+
+  # Name for the logical volume to contain the central logs
+  lv_name: lv_logs
+
+  # Size of the logical volume.
+  # The standard CloudForms log file system is 10G, so the centralized logging file system should be 10 times the number of CF appliances that will log to it assuming a standard 14 day retention.  For longer or shorter retention, adjust accordingly.
+  #100%FREE fails on subsequent runs unless we have 2.2 with shrink=False
+  #lv_size: 100%FREE
+  lv_size: 30g
+
+  # Days worth of logs to keep.  See comments regarding size of volume above.
+  days_to_keep: 14
+
+  # Mount point for the central logs file system.
+  mount_point: /cf_logs
+
+  # TCP port for rsyslog to listen on.
+  tcp_port: 514
+
+  # Facility to use for rsyslog.
+  log_facility: local0
+
+  # InputFilePollInterval for rsyslog
+  input_file_poll_interval: 10
+
+  # IP address of the central log host.
+  # Use the default IPv4 address of the central appliance.
+  central_ip: "{% for host in groups['central'] %}{{ hostvars[host]['ansible_default_ipv4']['address'] }}{% endfor %}"
+  # Specify a different IP address.
+  #central_ip: 192.168.1.1

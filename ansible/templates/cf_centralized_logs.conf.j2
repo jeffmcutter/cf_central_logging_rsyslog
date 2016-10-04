@@ -1,0 +1,12 @@
+{{ mount_point }}/*.log {
+  daily
+  dateext
+  missingok
+  rotate {{ days_to_keep }}
+  notifempty
+  compress
+  copytruncate
+  prerotate
+    source /etc/default/evm; /bin/sh ${APPLIANCE_SOURCE_DIRECTORY}/logrotate_free_space_check.sh $1
+  endscript
+}

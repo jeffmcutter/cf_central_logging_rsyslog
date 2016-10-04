@@ -1,0 +1,35 @@
+# CloudForms Centralized Logging by tag on TCP {{ tcp_port }}.
+
+$ModLoad imtcp
+$InputTCPServerRun {{ tcp_port }}
+
+:syslogtag, isequal, "cf_api:" {{ mount_point }}/api.log
+& stop
+:syslogtag, isequal, "cf_appliance_console:" {{ mount_point }}/appliance_console.log
+& stop
+:syslogtag, isequal, "cf_audit:" {{ mount_point }}/audit.log
+& stop
+:syslogtag, isequal, "cf_automation:" {{ mount_point }}/automation.log
+& stop
+:syslogtag, isequal, "cf_aws:" {{ mount_point }}/aws.log
+& stop
+:syslogtag, isequal, "cf_evm:" {{ mount_point }}/evm.log
+& stop
+:syslogtag, isequal, "cf_fog:" {{ mount_point }}/fog.log
+& stop
+:syslogtag, isequal, "cf_kubernetes:" {{ mount_point }}/kubernetes.log
+& stop
+:syslogtag, isequal, "cf_middleware:" {{ mount_point }}/middleware.log
+& stop
+:syslogtag, isequal, "cf_policy:" {{ mount_point }}/policy.log
+& stop
+:syslogtag, isequal, "cf_production:" {{ mount_point }}/production.log
+& stop
+:syslogtag, isequal, "cf_rhevm:" {{ mount_point }}/rhevm.log
+& stop
+:syslogtag, isequal, "cf_scvmm:" {{ mount_point }}/scvmm.log
+& stop
+:syslogtag, isequal, "cf_vim:" {{ mount_point }}/vim.log
+& stop
+:syslogtag, isequal, "cf_websocket:" {{ mount_point }}/websocket.log
+& stop

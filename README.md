@@ -28,6 +28,8 @@ The playbook expects a new disk to store the central logs on.  It will create a 
 
 The playbook also configures logrotate with a default of 14 days which is the same as standard CloudForms logs.  If the retention days are changed, the size of the disk should be sized accordingly.
 
+Note that the logrotate configuration assumes that the central log host is a CloudForms appliance.
+
 ## Usage
 
 * Review the ansible.cfg file and make updates if desired.

@@ -27,7 +27,7 @@
   log_facility: local0
 
   # InputFilePollInterval for rsyslog
-  input_file_poll_interval: 10
+  input_file_poll_interval: 5
 
   # IP address of the central log host.
   # Use the default IPv4 address of the central appliance.

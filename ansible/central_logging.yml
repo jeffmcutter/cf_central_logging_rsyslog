@@ -28,8 +28,8 @@
     template: src=templates/11-cloudforms-input.conf.j2 dest=/etc/rsyslog.d/11-cloudforms-input.conf owner=root group=root mode=0644
   - name: configure logrotate to rotate the central logs
     template: src=templates/cf_centralized_logs.conf.j2 dest=/etc/logrotate.d/cf_centralized_logs.conf owner=root group=root mode=0644
-  - name: restart rsyslog
-    service: name=rsyslog state=restarted
+  - name: enable and restart rsyslog
+    service: name=rsyslog enabled=yes state=restarted
 
 - name: configure remote appliances
   hosts: remotes
@@ -42,5 +42,5 @@
     template: src=templates/10-cloudforms-forward.conf.j2 dest=/etc/rsyslog.d/10-cloudforms-forward.conf owner=root group=root mode=0644
   - name: create input rsyslog config file
     template: src=templates/11-cloudforms-input.conf.j2 dest=/etc/rsyslog.d/11-cloudforms-input.conf owner=root group=root mode=0644
-  - name: restart rsyslog
-    service: name=rsyslog state=restarted
+  - name: enable and restart rsyslog
+    service: name=rsyslog enabled=yes state=restarted

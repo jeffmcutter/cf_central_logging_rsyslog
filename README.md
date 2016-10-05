@@ -24,9 +24,7 @@ Clone or download a zip of this project.
 
 ### You'll need to add a disk to your central logging appliance.
 
-The scripts expect a new disk to create a file system on under LVM control.  Based upon the default size of the CFME log file system of 10 GB, the size of this disk can be estimated at 10 GB times the number of CloudForms appliances that will log to this central log host.
-
-You may want to add some extra for good measure and keep an eye on space consumption.
+The scripts expect a new disk to create a file system on under LVM control.  Based upon the default size of the CFME log file system of 10 GB, the size of this disk can be estimated at 10 GB times the number of CloudForms appliances that will log to this central log host.  You may want to add some extra for good measure and keep an eye on space consumption.
 
 ## Usage
 

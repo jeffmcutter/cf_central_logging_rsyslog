@@ -4,7 +4,7 @@ The included Ansible playbook can be used to configure centralized logging via r
 
 ## Requirements
 
-### You need a host with Ansible installed to run the playbook from.
+### You'll need a host with Ansible installed to run the playbook from.
 
 This can be one of the CloudForms appliances or another host which has SSH access to all of the appliances to be configured.
 

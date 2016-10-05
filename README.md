@@ -1,4 +1,4 @@
-# Centralized logging for CloudForms appliances using rsyslog.
+# Centralized logging solution for CloudForms appliances using rsyslog only.
 
 The included Ansible playbook can be used to configure centralized logging via rsyslog for CloudForms logs.
 

@@ -2,9 +2,9 @@
 
 The included Ansible playbook can be used to configure centralized logging for CloudForms logs.
 
-# Requirements
+## Requirements
 
-## You need a host with Ansible installed to run the playbook from.
+### You need a host with Ansible installed to run the playbook from.
 
 This can be one of the CloudForms appliances or another host which has SSH access to all of the appliances to be configured.
 
@@ -18,17 +18,17 @@ rpm -ihv https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 yum install ansible
 ```
 
-## You'll need a copy of the code from the ansible directory here.
+### You'll need a copy of the code from the ansible directory here.
 
 Clone or download a zip of this project.
 
-## You'll need to add a disk to your central logging appliance.
+### You'll need to add a disk to your central logging appliance.
 
 The scripts expect a new disk to create a file system on under LVM control.  Based upon the default size of the CFME log file system of 10 GB, the size of this disk can be estimated at 10 GB times the number of CloudForms appliances that will log to this central log host.
 
 You may want to add some extra for good measure and keep an eye on space consumption.
 
-# Usage
+## Usage
 
 * Review the ansible.cfg file and make updates if desired.
 * Update the hosts files with your CloudForms appliances as described therein.

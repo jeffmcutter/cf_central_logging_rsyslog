@@ -29,7 +29,7 @@
   - name: configure logrotate to rotate the central logs
     template: src=templates/cf_centralized_logs.conf.j2 dest=/etc/logrotate.d/cf_centralized_logs.conf owner=root group=root mode=0644
   - name: add restart of rsyslog to logrotate miq_logs.conf
-    lineinfile: dest=/etc/logrotate.d/miq_logs.conf regexp='/sbin/service rsyslog reload.*$' insertafter='/sbin/service httpd reload.*$' line='    /sbin/service rsyslog reload > /dev/null 2>&1 || true'
+    lineinfile: dest=/etc/logrotate.d/miq_logs.conf regexp='/sbin/service rsyslog restart.*$' insertafter='/sbin/service httpd reload.*$' line='    /sbin/service rsyslog restart > /dev/null 2>&1 || true'
   - name: enable and restart rsyslog
     service: name=rsyslog enabled=yes state=restarted
 
@@ -45,6 +45,6 @@
   - name: create input rsyslog config file
     template: src=templates/11-cloudforms-input.conf.j2 dest=/etc/rsyslog.d/11-cloudforms-input.conf owner=root group=root mode=0644
   - name: add restart of rsyslog to logrotate miq_logs.conf
-    lineinfile: dest=/etc/logrotate.d/miq_logs.conf regexp='/sbin/service rsyslog reload.*$' insertafter='/sbin/service httpd reload.*$' line='    /sbin/service rsyslog reload > /dev/null 2>&1 || true'
+    lineinfile: dest=/etc/logrotate.d/miq_logs.conf regexp='/sbin/service rsyslog restart.*$' insertafter='/sbin/service httpd reload.*$' line='    /sbin/service rsyslog restart > /dev/null 2>&1 || true'
   - name: enable and restart rsyslog
     service: name=rsyslog enabled=yes state=restarted

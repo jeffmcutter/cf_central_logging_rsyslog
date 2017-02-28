@@ -4,16 +4,29 @@
   vars_files:
     - vars.yml
   tasks:
-  - name: create volume group
-    lvg: vg={{ vg_name }} pvs={{ log_disk }} state=present
-  - name: create logical volume
-    #shrink=False not supported until 2.2 and we have 2.1
-    #lvol: vg={{ vg_name }} lv={{ lv_name }} size={{ lv_size }} shrink=False
-    lvol: vg={{ vg_name }} lv={{ lv_name }} size={{ lv_size }}
-  - name: create file system
-    filesystem: fstype=xfs dev=/dev/{{ vg_name }}/{{lv_name}}
-  - name: mount file system
-    mount: name={{ mount_point }} src=/dev/{{ vg_name }}/{{ lv_name }} fstype=xfs state=mounted
+  # If configure_storage is true, configure the storage.
+  - block:
+    - name: create volume group
+      lvg: vg={{ vg_name }} pvs={{ log_disk }} state=present
+    - name: create logical volume
+      #shrink=False not supported until 2.2 and we have 2.1
+      #lvol: vg={{ vg_name }} lv={{ lv_name }} size={{ lv_size }} shrink=False
+      lvol: vg={{ vg_name }} lv={{ lv_name }} size={{ lv_size }}
+    - name: create file system
+      filesystem: fstype=xfs dev=/dev/{{ vg_name }}/{{lv_name}}
+    - name: mount file system
+      mount: name={{ mount_point }} src=/dev/{{ vg_name }}/{{ lv_name }} fstype=xfs state=mounted
+    when: configure_storage == true
+  # If configure_storage is false, verify that mount_point already exists.
+  - block:
+    - name: check if path exists.
+      stat: path={{ mount_point }}
+      register: check_path
+    - name: ensure mount_point exists.
+      fail:
+        msg: "ERROR: configure_storage is false and mount_point does not exist."
+      when: check_path.stat.exists == false
+    when: configure_storage == false
   - name: create default selinux context for mount point
     #sefcontext not available until 2.2.
     #sefcontext: target='/cf_logs(/.*)?' setype=var_log_t state=present
@@ -24,8 +37,10 @@
     firewalld: port={{ tcp_port }}/tcp permanent=true immediate=true state=enabled
   - name: create central rsyslog config file
     template: src=templates/10-cloudforms-central.conf.j2 dest=/etc/rsyslog.d/10-cloudforms-central.conf owner=root group=root mode=0644
+  # Only create input rsyslog config file if log_host_is_cfme is true.
   - name: create input rsyslog config file
     template: src=templates/11-cloudforms-input.conf.j2 dest=/etc/rsyslog.d/11-cloudforms-input.conf owner=root group=root mode=0644
+    when: log_host_is_cfme == true
   - name: configure logrotate to rotate the central logs
     template: src=templates/cf_centralized_logs.conf.j2 dest=/etc/logrotate.d/cf_centralized_logs.conf owner=root group=root mode=0644
   - name: add restart of rsyslog to logrotate miq_logs.conf

@@ -1,4 +1,9 @@
 ---
+  #
+  # If configure_storage is true the use log_disk to create volume group and file system.
+  # If configure_storage is false, then 
+  configure_storage: true
+
   # Specify the disk device to use for storing the central logs
   log_disk: /dev/vdc
 
@@ -34,3 +39,9 @@
   central_ip: "{% for host in groups['central'] %}{{ hostvars[host]['ansible_default_ipv4']['address'] }}{% endfor %}"
   # Specify a different IP address.
   #central_ip: 192.168.1.1
+
+  # If central is an CFME appliance it will forward to itself 
+
+  # If log_host_is_cfme is true, then the log host will be setup to collect CF logs.
+  # If log_host_is_cfme is false, then the log host will not be setup to collect CF logs.
+  log_host_is_cfme: true

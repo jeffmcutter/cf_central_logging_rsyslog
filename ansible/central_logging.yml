@@ -45,6 +45,7 @@
     template: src=templates/cf_centralized_logs.conf.j2 dest=/etc/logrotate.d/cf_centralized_logs.conf owner=root group=root mode=0644
   - name: add restart of rsyslog to logrotate miq_logs.conf
     lineinfile: dest=/etc/logrotate.d/miq_logs.conf regexp='/sbin/service rsyslog restart.*$' insertafter='/sbin/service httpd reload.*$' line='    /sbin/service rsyslog restart > /dev/null 2>&1 || true'
+    when: log_host_is_cfme == true
   - name: enable and restart rsyslog
     service: name=rsyslog enabled=yes state=restarted
 

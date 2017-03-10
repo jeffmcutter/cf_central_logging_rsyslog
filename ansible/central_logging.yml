@@ -27,27 +27,40 @@
         msg: "ERROR: configure_storage is false and mount_point does not exist."
       when: check_path.stat.exists == false
     when: configure_storage == false
-  - name: create default selinux context for mount point
-    #sefcontext not available until 2.2.
-    #sefcontext: target='/cf_logs(/.*)?' setype=var_log_t state=present
-    command: /usr/sbin/semanage fcontext -a -t var_log_t '{{ mount_point }}(/.*)?'
-  - name: set selinux context for mount point
-    command: /usr/sbin/restorecon -FR {{ mount_point }}
+  # If configure_selinux is true, configure SELinux
+  - block:
+    - name: create default selinux context for mount point
+      #sefcontext not available until 2.2.
+      #sefcontext: target='/cf_logs(/.*)?' setype=var_log_t state=present
+      command: /usr/sbin/semanage fcontext -a -t var_log_t '{{ mount_point }}(/.*)?'
+    - name: set selinux context for mount point
+      command: /usr/sbin/restorecon -FR {{ mount_point }}
+    when: configure_selinux == true
+  # If configure_firewall is true, configure firewall
   - name: open firewall for rsyslog connections on central
     firewalld: port={{ tcp_port }}/tcp permanent=true immediate=true state=enabled
+    when: configure_firewall == true
+  # Register if the rsyslog config changes so that rsyslog service can be restarted
   - name: create central rsyslog config file
     template: src=templates/10-cloudforms-central.conf.j2 dest=/etc/rsyslog.d/10-cloudforms-central.conf owner=root group=root mode=0644
+    register: central_syslog_config
   # Only create input rsyslog config file if log_host_is_cfme is true.
   - name: create input rsyslog config file
     template: src=templates/11-cloudforms-input.conf.j2 dest=/etc/rsyslog.d/11-cloudforms-input.conf owner=root group=root mode=0644
     when: log_host_is_cfme == true
-  - name: configure logrotate to rotate the central logs
-    template: src=templates/cf_centralized_logs.conf.j2 dest=/etc/logrotate.d/cf_centralized_logs.conf owner=root group=root mode=0644
-  - name: add restart of rsyslog to logrotate miq_logs.conf
-    lineinfile: dest=/etc/logrotate.d/miq_logs.conf regexp='/sbin/service rsyslog restart.*$' insertafter='/sbin/service httpd reload.*$' line='    /sbin/service rsyslog restart > /dev/null 2>&1 || true'
-    when: log_host_is_cfme == true
-  - name: enable and restart rsyslog
-    service: name=rsyslog enabled=yes state=restarted
+    register: cfme_syslog_config
+  # Configure logrotate to rotate the logs
+  - block:
+    - name: configure logrotate to rotate the central logs
+      template: src=templates/cf_centralized_logs.conf.j2 dest=/etc/logrotate.d/cf_centralized_logs.conf owner=root group=root mode=0644
+    - name: add restart of rsyslog to logrotate miq_logs.conf
+      lineinfile: dest=/etc/logrotate.d/miq_logs.conf regexp='/sbin/service rsyslog restart.*$' insertafter='/sbin/service httpd reload.*$' line='    /sbin/service rsyslog restart > /dev/null 2>&1 || true'
+      when: log_host_is_cfme == true
+  - name: enable rsyslog
+    service: name=rsyslog enabled=yes
+  - name: restart rsyslog
+    service: name=rsyslog state=restarted
+    when: central_syslog_config.changed or cfme_syslog_config.changed
 
 - name: configure remote appliances
   hosts: remotes
@@ -56,11 +69,17 @@
   tasks:
   - name: create /etc/hosts entry for central
     lineinfile: dest=/etc/hosts regexp='cf_loghost$' line='{{ central_ip }} cf_loghost'
+  # Register if the rsyslog config changes so that rsyslog service can be restarted
   - name: create forward rsyslog config file
     template: src=templates/10-cloudforms-forward.conf.j2 dest=/etc/rsyslog.d/10-cloudforms-forward.conf owner=root group=root mode=0644
+    register: forward_syslog_config
   - name: create input rsyslog config file
     template: src=templates/11-cloudforms-input.conf.j2 dest=/etc/rsyslog.d/11-cloudforms-input.conf owner=root group=root mode=0644
+    register: input_syslog_config
   - name: add restart of rsyslog to logrotate miq_logs.conf
     lineinfile: dest=/etc/logrotate.d/miq_logs.conf regexp='/sbin/service rsyslog restart.*$' insertafter='/sbin/service httpd reload.*$' line='    /sbin/service rsyslog restart > /dev/null 2>&1 || true'
-  - name: enable and restart rsyslog
-    service: name=rsyslog enabled=yes state=restarted
+  - name: enable rsyslog
+    service: name=rsyslog enabled=yes
+  - name: restart rsyslog
+    service: name=rsyslog state=restarted
+    when: forward_syslog_config.changed or input_syslog_config.changed

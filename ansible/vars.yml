@@ -19,11 +19,19 @@
   lv_size: 100%FREE
   #lv_size: 30g
 
-  # Days worth of logs to keep.  See comments regarding size of volume above.
-  days_to_keep: 14
-
   # Mount point for the central logs file system.
   mount_point: /cf_logs
+
+  # If configure_selinux is true the central server SELinux context for the mount point
+  # If configure-selinux is false then no changes to SELinux will be made
+  configure_selinux: true
+
+  # If configure_firewall is true the central server's firewall will be updated
+  # If configure-firewall is false then no changes to the central server's firewall will be made
+  configure_firewall: true
+
+  # Days worth of logs to keep.  See comments regarding size of volume above.
+  days_to_keep: 14
 
   # TCP port for rsyslog to listen on.
   tcp_port: 514

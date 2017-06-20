@@ -93,6 +93,13 @@ $InputFileSeverity notice
 $InputFileFacility {{ log_facility }}
 $InputRunFileMonitor
 
+$InputFileName /var/www/miq/vmdb/log/azure.log
+$InputFileTag cf_azure:
+$InputFileStateFile cf_azure
+$InputFileSeverity notice
+$InputFileFacility {{ log_facility }}
+$InputRunFileMonitor
+
 $InputFileName /var/www/miq/vmdb/log/vim.log
 $InputFileTag cf_vim:
 $InputFileStateFile cf_vim

@@ -29,6 +29,8 @@ $InputTCPServerRun {{ tcp_port }}
 & stop
 :syslogtag, isequal, "cf_scvmm:" {{ mount_point }}/scvmm.log
 & stop
+:syslogtag, isequal, "cf_azure:" {{ mount_point }}/azure.log
+& stop
 :syslogtag, isequal, "cf_vim:" {{ mount_point }}/vim.log
 & stop
 :syslogtag, isequal, "cf_websocket:" {{ mount_point }}/websocket.log

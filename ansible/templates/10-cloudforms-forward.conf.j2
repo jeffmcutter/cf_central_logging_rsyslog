@@ -26,6 +26,8 @@
 & stop
 :syslogtag, isequal, "cf_scvmm:" @@cf_loghost:{{ tcp_port }}
 & stop
+:syslogtag, isequal, "cf_azure:" @@cf_loghost:{{ tcp_port }}
+& stop
 :syslogtag, isequal, "cf_vim:" @@cf_loghost:{{ tcp_port }}
 & stop
 :syslogtag, isequal, "cf_websocket:" @@cf_loghost:{{ tcp_port }}
